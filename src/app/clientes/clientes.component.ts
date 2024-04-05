@@ -1,18 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente';
+import { ClienteService } from './cliente.service';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
 
 })
-export class ClientesComponent {
+export class ClientesComponent implements OnInit {
+//estructura para recibir los datos de la clase cliente por medio del servicio
+  clientes: Cliente[];
 
-  clientes: Cliente[]=[
-    {id: 1, nombre:'Julian', apellido:'Quimbayo', email:'julian.quimbayo@corhuila.edu.co',createAt:'2024-03-21'},
-    {id: 2, nombre:'Carlos', apellido:'Castro', email:'julian.quimbayo@corhuila.edu.co',createAt:'2024-02-21'},
-    {id: 3, nombre:'Julian', apellido:'Quimbayo', email:'julian.quimbayo@corhuila.edu.co',createAt:'2024-01-21'},
-    {id: 4, nombre:'Julian', apellido:'Quimbayo', email:'julian.quimbayo@corhuila.edu.co',createAt:'2024-03-20'}
-  ]
+//crear el constructor asociado a la clase servicio
+  constructor(private clienteService: ClienteService){
 
+  }
+  
+  ngOnInit(): void {
+    //asociar al atributo clientes los datos que vienen del servicio
+    //this.clientes = this.clienteService.getClientes()
+
+    this.clienteService.getClientes().subscribe(
+      clientes => this.clientes = clientes
+    );
+  }
 }
